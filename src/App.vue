@@ -7,6 +7,10 @@
       >
         <h2 class="container__title">Welcome<br>Scan QR Code</h2>
         <QRCodeIcon class="container__placeholder"/>
+        <div
+          v-if="error"
+          class="container__error"
+        >Try again</div>
       </div>
       <iframe
         v-show="result"
@@ -14,7 +18,6 @@
         class="container__iframe"
         frameborder="0"
         :src="result"
-        @load="handleIframLoaded"
       />
     </div>
     <template name="slide">
@@ -22,7 +25,10 @@
         v-if="active"
         class="toolbar"
       >
-        <QRFile @decode="handleDecode"/>
+        <QRFile
+          ref="file"
+          @decode="handleDecode"
+        />
       </div>
     </template>
   </div>
@@ -40,19 +46,15 @@ export default {
   },
   data: () => ({
     result: null,
-    active: true
+    active: true,
+    error: false
   }),
   created () {
     this.handleScroll()
   },
   methods: {
-    handleIframLoaded () {
-      console.log('loaded')
-      const iframe = this.$refs.iframe
-      const content = iframe.contentDocument || iframe.contentWindow.document
-      content.body.style.transform = 'translate3d(0,0,0)'
-      content.body.style.webkitTransform = 'translate3d(0,0,0)'
-      console.log(content)
+    validateURL (url) {
+      return new RegExp('^(http|https)://').test(url)
     },
     handleScroll () {
       let scrollTop = window.scrollTop
@@ -68,7 +70,13 @@ export default {
       })
     },
     handleDecode (result) {
-      this.result = result
+      if (this.validateURL(result)) {
+        this.result = result
+        this.error = false
+      } else {
+        this.error = true
+        this.$nextTick(() => this.$refs.file.$el.querySelector('input').value = '')
+      }
     }//,
     // setResponseIframeOnIOS (event) {
     //   const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
@@ -97,6 +105,12 @@ export default {
 
   &__placeholder {
     margin: 80px auto 0;
+  }
+
+  &__error {
+    margin-top: 20px;
+    color: red;
+    font-size: 14px;
   }
 
   &__iframe {
