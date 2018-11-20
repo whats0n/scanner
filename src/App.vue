@@ -10,7 +10,7 @@
           <QRCodeIcon class="container__placeholder"/>
         </div>
         <Stream
-          v-if="isReading"
+          v-show="isReading"
           @support="handleSupport"
           @success="handleSuccessReading"
         />
