@@ -102,8 +102,8 @@ export default {
 
 <style lang="scss">
 .qrcode-stream {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 
   &__inner-wrapper,
   &__camera,

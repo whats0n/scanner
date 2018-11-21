@@ -83,9 +83,9 @@ body,
 }
 
 .container {
-  -webkit-overflow-scrolling: touch;
-  overflow: auto;
-  height: calc(100% - 70px);
+  // -webkit-overflow-scrolling: touch;
+  // overflow: auto;
+  // height: calc(100% - 70px);
 
   &__intro {
     padding: 50px 0 0;
@@ -105,8 +105,9 @@ body,
   }
 
   &__iframe {
+    margin-bottom: 70px;
     width: 100%;
-    min-height: 100%;
+    // min-height: 100%;
   }
 }
 
