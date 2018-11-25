@@ -23,6 +23,7 @@
     "node-sass": "^4.10.0",
     "qrcode-reader": "^1.0.4",
     "sass-loader": "^7.1.0",
+    "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
